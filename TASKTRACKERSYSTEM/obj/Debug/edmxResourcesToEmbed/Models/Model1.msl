@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TASKTRACKERModelStoreContainer" CdmEntityContainer="TASKTRACKEREntities">
+    <EntitySetMapping Name="TASKs">
+      <EntityTypeMapping TypeName="TASKTRACKERModel.TASK">
+        <MappingFragment StoreEntitySet="TASK">
+          <ScalarProperty Name="TASKID" ColumnName="TASKID" />
+          <ScalarProperty Name="TASKNAME" ColumnName="TASKNAME" />
+          <ScalarProperty Name="ASSIGNEDTO" ColumnName="ASSIGNEDTO" />
+          <ScalarProperty Name="DUETO" ColumnName="DUETO" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERS">
+      <EntityTypeMapping TypeName="TASKTRACKERModel.USER">
+        <MappingFragment StoreEntitySet="USERS">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

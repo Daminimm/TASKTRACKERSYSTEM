@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TASKTRACKERSYSTEM.Models.TASK>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Task Tracker System</h2>
+<p class="text-right">
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@if (ViewBag.Message != null)
+{
+
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+<table class="table">
+    <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TASKNAME)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ASSIGNEDTO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DUETO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.STATUS)
+            </th>
+
+    </tr>
+
+
+    @if (Model != null && Model.Count() > 0)
+    {
+
+        foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TASKNAME)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.USER.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DUETO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusEnum)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Update", "Update", new { ID = item.TASKID }) |
+
+                    @Html.ActionLink("Delete", "Delete", new { ID = item.TASKID })
+                </td>
+            </tr>
+
+        }
+    }
+    else
+    {
+        <td colspan="4" class="text-center"><b>No Data Available . Please Add Data By CLick On Create Button</b></td>
+
+    }
+
+</table>
+

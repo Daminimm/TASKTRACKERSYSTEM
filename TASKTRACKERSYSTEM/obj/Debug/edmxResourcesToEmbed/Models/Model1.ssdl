@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TASKTRACKERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TASK">
+    <Key>
+      <PropertyRef Name="TASKID" />
+    </Key>
+    <Property Name="TASKID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TASKNAME" Type="varchar" MaxLength="50" />
+    <Property Name="ASSIGNEDTO" Type="int" />
+    <Property Name="DUETO" Type="date" />
+    <Property Name="STATUS" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__TASK__ASSIGNEDTO__4BAC3F29">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TASK" Type="Self.TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="TASK">
+        <PropertyRef Name="ASSIGNEDTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TASKTRACKERModelStoreContainer">
+    <EntitySet Name="TASK" EntityType="Self.TASK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__TASK__ASSIGNEDTO__4BAC3F29" Association="Self.FK__TASK__ASSIGNEDTO__4BAC3F29">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASK" EntitySet="TASK" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
