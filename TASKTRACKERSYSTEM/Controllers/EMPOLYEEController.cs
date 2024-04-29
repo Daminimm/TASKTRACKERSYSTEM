@@ -14,9 +14,27 @@ namespace TASKTRACKERSYSTEM.Controllers
         {
            TASKTRACKEREntities DBContext = new TASKTRACKEREntities();
            List<TASK> EmpList = DBContext.TASKs.ToList();
-           return View(EmpList);
+
+            List<TaskViewModel> viewModelList = new List<TaskViewModel>();
+            foreach (var task in EmpList)
+            {
+                TaskViewModel viewModel = new TaskViewModel
+                {
+                    TASKID = task.TASKID,
+                    TASKNAME = task.TASKNAME,
+                    ASSIGNEDTO = task.ASSIGNEDTO,
+                    DUETO = task.DUETO,
+                    STATUS = (TaskStatus)task.STATUS, // Convert int to TaskStatus enum
+                    USER = task.USER
+                };
+
+                viewModelList.Add(viewModel);
+            }
+
+            return View(viewModelList);
+
         }
-        public ActionResult Create()
+        public ActionResult Create( )
         {
             TASKTRACKEREntities DBContext = new TASKTRACKEREntities();
 
@@ -29,15 +47,34 @@ namespace TASKTRACKERSYSTEM.Controllers
             }
            
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
+
+           var status = new List<SelectListItem>
+           {
+            new SelectListItem { Text = "Not Started", Value = ((int)TaskStatus.NotStarted).ToString() },
+            new SelectListItem { Text = "In Progress", Value = ((int)TaskStatus.InProgress).ToString() },
+            new SelectListItem { Text = "Completed", Value = ((int)TaskStatus.Completed).ToString() }
+           };
+
+            ViewBag.Status = status;
             return View(new TASK());
 
         }
         [HttpPost]
-        public ActionResult Create(TASK MODEL)
+        public ActionResult Create(TASK MODEL, TaskStatus status)
         {
             TASKTRACKEREntities DBContext = new TASKTRACKEREntities();
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
+            var statuslist = new List<SelectListItem>
+           {
+            new SelectListItem { Text = "Not Started", Value = ((int)TaskStatus.NotStarted).ToString() },
+            new SelectListItem { Text = "In Progress", Value = ((int)TaskStatus.InProgress).ToString() },
+            new SelectListItem { Text = "Completed", Value = ((int)TaskStatus.Completed).ToString() }
+           };
+
+
+            ViewBag.Status = statuslist;
+
             if (ModelState.IsValid)
             {
                 

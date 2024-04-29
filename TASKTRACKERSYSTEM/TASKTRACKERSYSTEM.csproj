@@ -208,6 +208,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\enum.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -226,6 +227,8 @@
     <Compile Include="Models\TASK.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TaskViewModel.cs" />
+    <Compile Include="Models\ToString.cs" />
     <Compile Include="Models\USER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

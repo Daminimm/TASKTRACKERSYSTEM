@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TASKTRACKERSYSTEM.Models.TASK>
+﻿@model IEnumerable<TASKTRACKERSYSTEM.Models.TaskViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -20,20 +20,23 @@
 <table class="table">
     <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.TASKNAME)
+        <th>
+            @Html.DisplayNameFor(model => model.TASKNAME)
 
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ASSIGNEDTO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DUETO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.STATUS)
-            </th>
-
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ASSIGNEDTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DUETO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </th>
+        <th>
+            @Html.Display("activtiy")
+        </th>
+        <th>Action</th>
     </tr>
 
 
@@ -42,28 +45,42 @@
 
         foreach (var item in Model)
         {
-            <tr>
+<tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.TASKNAME)
+    <td>
+        @Html.DisplayFor(modelItem => item.TASKNAME)
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.USER.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DUETO)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StatusEnum)
-                </td>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.USER.Username)
+    </td>
+    <td>
+        @*@Html.DisplayFor(modelItem => item.DUETO.HasValue ? item.DUETO.Value.ToString("dd-MM-yyyy") : "")*@
+        @if (item.DUETO.HasValue)
+        {
+            @item.DUETO.Value.ToString("dd-MM-yyyy")
+        }
+        else
+        {
+            @Html.DisplayFor(modelItem => item.DUETO)
+        }
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.STATUS)
+    </td>
+        <td>
+            <td>
+             @Html.ActionLink("Update", "Update", new { ID = item.TASKID }) |
 
-                <td>
-                    @Html.ActionLink("Update", "Update", new { ID = item.TASKID }) |
+             @Html.ActionLink("Delete", "Delete", new { ID = item.TASKID })
+            </td>
+        </td>
 
-                    @Html.ActionLink("Delete", "Delete", new { ID = item.TASKID })
-                </td>
-            </tr>
+
+
+
+</tr>
+
 
         }
     }

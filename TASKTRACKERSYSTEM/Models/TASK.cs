@@ -12,31 +12,28 @@ namespace TASKTRACKERSYSTEM.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using TASKTRACKERSYSTEM.CustomValidation;
 
-    public enum TaskStatus
-    {
-        NotStarted =0,
-        InProgress=1 ,
-        Completed =2
-        
-    }
+    
+
     public partial class TASK
     {
         public int TASKID { get; set; }
         [Required]
         [Alphanumeric(ErrorMessage = "Task Name should allow only alphanumeric characters and be maximum 50 characters.")]
         public string TASKNAME { get; set; }
+        [Required]
         public Nullable<int> ASSIGNEDTO { get; set; }
-     
+        //[DataType(DataType.Date)]
+        [Required]
         public Nullable<System.DateTime> DUETO { get; set; }
         public int STATUS { get; set; }
-        public TaskStatus StatusEnum // Property to get or set status as enum
-        {
-            get => (TaskStatus)STATUS;
-            set => STATUS = (int)value;
-        }
 
         public virtual USER USER { get; set; }
     }
+    
+
+
+
 }

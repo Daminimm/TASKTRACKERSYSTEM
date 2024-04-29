@@ -1,10 +1,43 @@
 ﻿@model TASKTRACKERSYSTEM.Models.TASK
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
+<script src="~/Scripts/jquery-2.0.0.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/datepicker.css" rel="stylesheet" />
+
+
 <h2>Create</h2>
+<style type="text/css">
+    .ui-datepicker-trigger {
+        /* Apply your CSS styles here */
+        width: 30px;
+        height: 30px;
+       
+    }
+    body {
+        font-family: 'Times New Roman';
+        font-size: 15pt;
+    }
+    label.required::after {
+        content: " *";
+        color: red;
+    }
+    .form-control {
+        border: 2px solid;
+        padding: 3px;
+    }
+
+
+</style>
+
 @if (ViewBag.Message != null)
+
 {
     <p class="alert alert-success" role="alert">
         @ViewBag.Message
@@ -21,7 +54,7 @@
     <hr />
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <p class="form-group">
-        @Html.LabelFor(model => model.TASKNAME , htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.TASKNAME,"TaskName", htmlAttributes: new { @class = "control-label col-md-2 required" })
     <p class="col-md-10">
         @Html.EditorFor(model => model.TASKNAME)
         @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
@@ -29,7 +62,7 @@
     </p>
     </p>
     <p class="form-group">
-        @Html.Label("ASSIGNEDTO ", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("AssignedTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
         @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
 
 
@@ -38,41 +71,32 @@
     </p>
     </p>
     <p class="form-group">
-        @Html.LabelFor(model => model.DUETO, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.DUETO, new { htmlAttributes = new { @class = "datepicker", type = "date" } })
-        <script>
-            $(document).ready(function () {
-                $(".datepicker").datepicker({
-                    //dateFormat: "dd-mm-yy",
-                    dateFormat: "dd/M/yy",
-                    changeMonth: true,
-                    changeYear: true,
-                    minDate: new Date(2023, 10 - 1, 25),// Disable past dates
-                    
-                    maxDate: "+1Y" // Allow dates up to 1 year in the future
-                   
+        @Html.LabelFor(model => model.DUETO,"DueTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off", @display = "date" })
+       
 
+        <span class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+        </span>
 
-                });
-            });
-       </script>
 <p class="col-md-10">
-
 
         @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
 
     </p>
+
     </p>
     <p class="form-group">
-        @Html.LabelFor(model => model.STATUS, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EnumDropDownListFor(model => model.StatusEnum)
+        @Html.LabelFor(model => model.STATUS,"Status", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")
 
 
     </p>
 
     <p class="form-group">
     <p class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Create" class="btn btn-default" />
+        
+        <input type="submit" value="Submit" class="btn btn-default"/ >
     </p>
     </p>
     </p>
@@ -80,5 +104,30 @@
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
+<script>
+    $(document).ready(function () {
+        $("#DUETO").datepicker({
+            dateFormat: "dd-MM-yy",
+            minDate: 0,
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            showOn: 'both',
+            buttonImageOnly: true,
+            buttonImage: 'https://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+            timepicker: false,
+            
+            
+        
+
+
+        });
+    });
+</script>
+
+
+
 
 
