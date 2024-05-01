@@ -19,6 +19,8 @@ namespace TASKTRACKERSYSTEM.Models
 
     public partial class TASK
     {
+     
+
         public int TASKID { get; set; }
         [Required]
         [Alphanumeric(ErrorMessage = "Task Name should allow only alphanumeric characters and be maximum 50 characters.")]
@@ -29,8 +31,9 @@ namespace TASKTRACKERSYSTEM.Models
         [Required]
         public Nullable<System.DateTime> DUETO { get; set; }
         public int STATUS { get; set; }
-
+       
         public virtual USER USER { get; set; }
+        public int UserID { get; internal set; }
     }
     
 

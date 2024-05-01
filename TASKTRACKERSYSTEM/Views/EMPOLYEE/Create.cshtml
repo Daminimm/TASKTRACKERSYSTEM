@@ -16,8 +16,9 @@
 <style type="text/css">
     .ui-datepicker-trigger {
         /* Apply your CSS styles here */
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 40.53px;
+        
        
     }
     body {
@@ -31,6 +32,8 @@
     .form-control {
         border: 2px solid;
         padding: 3px;
+        box-sizing:border-box;
+        
     }
 
 
@@ -38,40 +41,43 @@
 
 @if (ViewBag.Message != null)
 
-{
+ {
     <p class="alert alert-success" role="alert">
         @ViewBag.Message
     </p>
 
-}
+ }
 
 @using (Html.BeginForm())
-{
+ {
     @Html.AntiForgeryToken()
 
     <p class="form-horizontal">
     <p>EMPLOYE</p>
     <hr />
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    <p class="form-group">
-        @Html.LabelFor(model => model.TASKNAME,"TaskName", htmlAttributes: new { @class = "control-label col-md-2 required" })
-    <p class="col-md-10">
-        @Html.EditorFor(model => model.TASKNAME)
-        @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
+<p class="form-group">
+    @Html.LabelFor(model => model.TASKNAME, "TASKNAME", htmlAttributes: new { @class = "control-label col-md-2 required" })
+    @Html.EditorFor(model => model.TASKNAME)
+<p class="col-md-10">
+       
+    @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
 
     </p>
     </p>
-    <p class="form-group">
-        @Html.Label("AssignedTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+<p class="form-group">
+    @Html.Label("AssignedTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
+    @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+   
 
 
-    <p class="col-md-10">
+
+<p class="col-md-10">
         @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
     </p>
     </p>
     <p class="form-group">
-        @Html.LabelFor(model => model.DUETO,"DueTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.LabelFor(model => model.DUETO, "DUETO",  htmlAttributes: new { @class = "control-label col-md-2 required" })
         @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off", @display = "date" })
        
 
@@ -79,15 +85,14 @@
             <i class="fa fa-calendar"></i>
         </span>
 
-<p class="col-md-10">
+    <p class="col-md-10">
 
         @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
 
     </p>
-
     </p>
     <p class="form-group">
-        @Html.LabelFor(model => model.STATUS,"Status", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.LabelFor(model => model.STATUS, "STATUS", htmlAttributes: new { @class = "control-label col-md-2 required" })
         @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")
 
 
@@ -95,12 +100,13 @@
 
     <p class="form-group">
     <p class="col-md-offset-2 col-md-10">
+        <button>SUBMIT</button>
+        @*<input type="submit" value="Submit" class="btn btn-default" />*@
         
-        <input type="submit" value="Submit" class="btn btn-default"/ >
     </p>
     </p>
     </p>
-}
+ }
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
@@ -114,14 +120,11 @@
             showButtonPanel: true,
             showOtherMonths: true,
             selectOtherMonths: true,
-            showOn: 'both',
+            showOn: 'button',
             buttonImageOnly: true,
             buttonImage: 'https://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
             timepicker: false,
             
-            
-        
-
 
         });
     });

@@ -1,0 +1,86 @@
+﻿@model TASKTRACKERSYSTEM.Models.TASK
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@if (ViewBag.Message != null)
+
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <p class="form-horizontal">
+    <p>EMPLOYE</p>
+    <hr />
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <p class="form-group">
+        @Html.LabelFor(model => model.TASKNAME, "TASKNAME", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.EditorFor(model => model.TASKNAME)
+    <p class="col-md-10">
+
+        @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
+
+    </p>
+    </p>
+    <p class="form-group">
+        @Html.LabelFor(model => model.ASSIGNEDTO, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+    <p class="col-md-10">
+
+        @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
+    </p>
+    </p>
+
+    <p class="form-group">
+        @Html.LabelFor(model => model.DUETO, "DUETO", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off", @display = "date" })
+
+
+        <span class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+        </span>
+
+    <p class="col-md-10">
+
+        @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
+
+    </p>
+    </p>
+    <p class="form-group">
+        @*@Html.LabelFor(model => model.STATUS, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        @*@Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")*@
+        @*@Html.DropDownListFor(model => model.STATUS, (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")*@
+        @Html.LabelFor(model => model.STATUS, "Status", new { @class = "control-label" })
+        @*@Html.DropDownListFor(model => model.STATUS.ToString, ViewBag.Status as List<SelectListItem>, "Select Status", new { @class = "form-control" })*@
+        @Html.DropDownListFor(model => model.STATUS, ViewBag.StatusList as SelectList, "Select Status", new { @class = "form-control" })
+    </p>
+
+    
+
+    <p class="col-md-10">
+
+        @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
+    </p>
+    </p>
+
+    <p class="form-group">
+    <p class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn btn-default" />
+
+    </p>
+    </p>
+
+}
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

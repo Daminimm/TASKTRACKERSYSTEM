@@ -3,40 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
+using System.ComponentModel;
+using System.Reflection;
+
 namespace TASKTRACKERSYSTEM.Models
 {
+   
     public enum TaskStatus
     {
-       NotStarted=0,
-       InProgress=1,
-       Completed=2,
+        NotStarted = 0,
+        InProgress=1,
+        Completed=2,
     }
 
     public class Task
     {
-        public int STATUS { get; set; }
-        public TaskStatus StatusEnum // Property to get or set status as enum
-        {
+       public int STATUS { get; set; }
+       
+        public TaskStatus Status // Property to get or set status as enum
+       {
             get => (TaskStatus)STATUS;
-            set => STATUS = (int)value;
-        }
+           set => STATUS = (int)value;
+       }
 
-        public string StatusString
-        {
+       public string StatusString
+       {
             get
             {
-                switch (StatusEnum)
+                switch (Status)
                 {
                     case TaskStatus.NotStarted:
-                     return "Not Started";
+                        return "Not Started";
                     case TaskStatus.InProgress:
-                      return "In Progress";
+                        return "In Progress";
                     case TaskStatus.Completed:
-                       return "Completed";
+                        return "Completed";
                     default:
                         return "Unknown";
                 }
             }
-        }
+       }
+
+     
     }
 }
