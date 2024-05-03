@@ -22,7 +22,7 @@ namespace TASKTRACKERSYSTEM.Models
      
 
         public int TASKID { get; set; }
-        [Required]
+       
         [Alphanumeric(ErrorMessage = "Task Name should allow only alphanumeric characters and be maximum 50 characters.")]
         public string TASKNAME { get; set; }
         [Required]

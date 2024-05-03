@@ -3,84 +3,115 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/jquery-2.0.0.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/datepicker.css" rel="stylesheet" />
 
 <h2>Edit</h2>
+<style type="text/css">
+    .ui-datepicker-trigger {
+        /* Apply your CSS styles here */
+        width: 36px;
+        height: 40.53px;
+    }
 
-@if (ViewBag.Message != null)
+    body {
+        font-family: 'Times New Roman';
+        font-size: 15pt;
+    }
 
-{
-    <p class="alert alert-success" role="alert">
-        @ViewBag.Message
-    </p>
+    label.required::after {
+        content: " *";
+        color: red;
+    }
 
-}
-
+    .form-control {
+        border: 2px solid;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+</style>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <p class="form-horizontal">
+    <p class="form-horizontal"></p>
     <p>EMPLOYE</p>
     <hr />
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <p class="form-group">
-        @Html.LabelFor(model => model.TASKNAME, "TASKNAME", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.LabelFor(model => model.TASKNAME, "Task Name ", htmlAttributes: new { @class = "control-label col-md-2 required" })
         @Html.EditorFor(model => model.TASKNAME)
-    <p class="col-md-10">
-
-        @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
-
     </p>
+    <p class="col-md-10">
+        @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
     </p>
     <p class="form-group">
-        @Html.LabelFor(model => model.ASSIGNEDTO, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ASSIGNEDTO, "Assigned To", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+    </p>
     <p class="col-md-10">
-
         @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
     </p>
-    </p>
 
     <p class="form-group">
-        @Html.LabelFor(model => model.DUETO, "DUETO", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off", @display = "date" })
-
-
-        <span class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-        </span>
-
+        @Html.LabelFor(model => model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off", @display = "date", @Value = " Model.DUETO.HasValue.ToString()" })
+    </p>
     <p class="col-md-10">
-
         @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
+    </p>
 
-    </p>
-    </p>
     <p class="form-group">
-        @*@Html.LabelFor(model => model.STATUS, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        @*@Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")*@
-        @*@Html.DropDownListFor(model => model.STATUS, (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")*@
+
         @Html.LabelFor(model => model.STATUS, "Status", new { @class = "control-label" })
-        @*@Html.DropDownListFor(model => model.STATUS.ToString, ViewBag.Status as List<SelectListItem>, "Select Status", new { @class = "form-control" })*@
         @Html.DropDownListFor(model => model.STATUS, ViewBag.StatusList as SelectList, "Select Status", new { @class = "form-control" })
     </p>
-
-    
-
     <p class="col-md-10">
 
         @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
     </p>
-    </p>
 
-    <p class="form-group">
+    <p class="form-group"></p>
     <p class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Save" class="btn btn-default" />
+        @*<input type="submit" value="Save" class="btn btn-default" />*@
+        <button type="submit"
+                id="submitButton"
+                class="btn btn-dark">
+            Save
+        </button>
 
     </p>
-    </p>
+ }
 
+@{
+    if (ViewBag.Message != null)
+    {
+    <div>
+        @ViewBag.Message= TempData["message"];
+    </div>
+    }
 }
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
+<script>
+    $(document).ready(function () {
+        $("#DUETO").datepicker({
+            dateFormat: "dd-MM-yy",
+            minDate: 0,
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            showOn: 'button',
+            buttonImageOnly: true,
+            buttonImage: 'https://jqueryui.com/resources/demos/datepicker/images/calendar.gif',
+            timepicker: false,
+
+
+        });
+    });
+</script>
