@@ -98,8 +98,6 @@ namespace TASKTRACKERSYSTEM.Controllers
                 TempData["message"] = "Record Create Successfully";    
             }
             
-         
-           
             return RedirectToAction("Index");
         }
 
@@ -113,21 +111,13 @@ namespace TASKTRACKERSYSTEM.Controllers
             {
                 return HttpNotFound();
             }
+            
 
-           //if(data.DUETO.HasValue)
-           //{
-           //     ViewBag.DUETO = data.DUETO.Value.ToString("dd-MM-yyyy");
-
-           //}
-           //else
-           //{
-           //     ViewBag.DUETO = null;
-           //}
-        
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
-            ViewBag.DueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("dd-MM-yyyy") : null;
-         
+            //ViewBag.DueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("dd-MM-yyyy") : null;
+           
+
             List<SelectListItem> statusList = new List<SelectListItem>
             {
                  new SelectListItem { Text = "Not Started", Value = ((int)TaskStatus.NotStarted).ToString() },
@@ -136,9 +126,11 @@ namespace TASKTRACKERSYSTEM.Controllers
             };
 
              ViewBag.StatusList = new SelectList(statusList, "Value", "Text", data.STATUS.ToString());
-        
+            //var shortDueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("d") : null;
+   
 
-            return View(data);
+
+                return View(data);
         }
         [HttpPost]
         public ActionResult Edit(TASK MODEL, int id)
@@ -149,12 +141,10 @@ namespace TASKTRACKERSYSTEM.Controllers
             {
                 return HttpNotFound();
             }
+            
 
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
-            ViewBag.DueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("dd-MM-yyyy") : null;
-
-
             List<SelectListItem> statusList = new List<SelectListItem>
             {
                new SelectListItem { Text = "Not Started", Value = TaskStatus.NotStarted.ToString() },
@@ -162,13 +152,17 @@ namespace TASKTRACKERSYSTEM.Controllers
                new SelectListItem { Text = "Completed", Value = TaskStatus.Completed.ToString() }
             };
             ViewBag.StatusList = new SelectList(statusList, "Value", "Text", data.STATUS.ToString());
-           if (ModelState.IsValid)
+            if (ModelState.IsValid)
            {
                 if (data != null)
                 {
                     data.TASKNAME = MODEL.TASKNAME;
                     data.ASSIGNEDTO = MODEL.ASSIGNEDTO;
-                    data.DUETO = MODEL.DUETO;
+                    if (MODEL.DUETO.HasValue)
+                    {
+                        data.DUETO = MODEL.DUETO.Value.Date;
+                    }
+                    //data.DUETO = MODEL.DUETO;
                     data.STATUS = MODEL.STATUS;
                     DBContext.SaveChanges();
                     //ViewBag.Message = "Record Update Successfully";
@@ -176,8 +170,7 @@ namespace TASKTRACKERSYSTEM.Controllers
                   
                 }
                 
-             
-           }
+            }
            
             return RedirectToAction("Index");
         }

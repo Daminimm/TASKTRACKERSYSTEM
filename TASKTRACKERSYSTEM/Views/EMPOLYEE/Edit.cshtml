@@ -59,15 +59,14 @@
     </p>
 
     <p class="form-group">
-        @Html.LabelFor(model => model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
-
-
-        @*@Html.EditorFor(model => model.DUETO, new {@Value= ViewBag.DueTo, @class = "datepicker", @autocomplete = "off", @display = "date" })*@
-
+        @Html.LabelFor(Model => Model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @*(Model.HasValue ? Model.Value.ToShortDateString() : string.Empty)*@
+        @*@Html.EditorFor(model => model.DUETO.Value.ToString("d"), new { @value = "ViewBag.DueTo", @class = "datepicker", @autocomplete = "off", @display = "date" })*@
 
     </p>
     <p class="col-md-10">
-        <input type="text" class="datepicker" value="@ViewBag.DueTo"  readonly />
+        @*<input type="text" class="datepicker" value="@ViewBag.DueTo"  readonly />*@
+        @Html.TextBox("DUETO", Model.DUETO.Value, "{0:dd-MM-yyyy}", new { @style = "width:100%", @class = "datepicker", @autocomplete = "off", })
         @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
     </p>
 

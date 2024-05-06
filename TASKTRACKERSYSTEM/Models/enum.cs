@@ -12,9 +12,12 @@ namespace TASKTRACKERSYSTEM.Models
    
     public enum TaskStatus
     {
+        //[Description("Not Started")]
         NotStarted = 0,
-        InProgress=1,
-        Completed=2,
+        //[Description("In Progress")]
+        InProgress =1,
+        //[Description("Completed")]
+        Completed =2,
     }
 
     public class Task
