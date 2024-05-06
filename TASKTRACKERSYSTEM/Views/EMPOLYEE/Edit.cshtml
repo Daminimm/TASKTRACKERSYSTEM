@@ -42,24 +42,32 @@
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <p class="form-group">
         @Html.LabelFor(model => model.TASKNAME, "Task Name ", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @Html.EditorFor(model => model.TASKNAME)
+
     </p>
     <p class="col-md-10">
+        @Html.EditorFor(model => model.TASKNAME)
         @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
     </p>
     <p class="form-group">
         @Html.LabelFor(model => model.ASSIGNEDTO, "Assigned To", htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+
     </p>
     <p class="col-md-10">
+        @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+
         @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
     </p>
 
     <p class="form-group">
         @Html.LabelFor(model => model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off", @display = "date", @Value = " Model.DUETO.HasValue.ToString()" })
+
+
+        @*@Html.EditorFor(model => model.DUETO, new {@Value= ViewBag.DueTo, @class = "datepicker", @autocomplete = "off", @display = "date" })*@
+
+
     </p>
     <p class="col-md-10">
+        <input type="text" class="datepicker" value="@ViewBag.DueTo"  readonly />
         @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
     </p>
 
@@ -98,7 +106,7 @@
 </p>
 <script>
     $(document).ready(function () {
-        $("#DUETO").datepicker({
+        $(".datepicker").datepicker({
             dateFormat: "dd-MM-yy",
             minDate: 0,
             changeMonth: true,

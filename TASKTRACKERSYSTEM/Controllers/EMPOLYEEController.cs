@@ -114,8 +114,19 @@ namespace TASKTRACKERSYSTEM.Controllers
                 return HttpNotFound();
             }
 
+           //if(data.DUETO.HasValue)
+           //{
+           //     ViewBag.DUETO = data.DUETO.Value.ToString("dd-MM-yyyy");
+
+           //}
+           //else
+           //{
+           //     ViewBag.DUETO = null;
+           //}
+        
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
+            ViewBag.DueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("dd-MM-yyyy") : null;
          
             List<SelectListItem> statusList = new List<SelectListItem>
             {
@@ -125,7 +136,8 @@ namespace TASKTRACKERSYSTEM.Controllers
             };
 
              ViewBag.StatusList = new SelectList(statusList, "Value", "Text", data.STATUS.ToString());
-             
+        
+
             return View(data);
         }
         [HttpPost]
@@ -140,7 +152,9 @@ namespace TASKTRACKERSYSTEM.Controllers
 
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
-           
+            ViewBag.DueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("dd-MM-yyyy") : null;
+
+
             List<SelectListItem> statusList = new List<SelectListItem>
             {
                new SelectListItem { Text = "Not Started", Value = TaskStatus.NotStarted.ToString() },
@@ -148,9 +162,8 @@ namespace TASKTRACKERSYSTEM.Controllers
                new SelectListItem { Text = "Completed", Value = TaskStatus.Completed.ToString() }
             };
             ViewBag.StatusList = new SelectList(statusList, "Value", "Text", data.STATUS.ToString());
-            ViewBag.Dueto = new SelectList("Value", "Text", data.DUETO.Value.ToString("dd-MM-yyyy"));
-            if (ModelState.IsValid)
-            {
+           if (ModelState.IsValid)
+           {
                 if (data != null)
                 {
                     data.TASKNAME = MODEL.TASKNAME;
@@ -164,7 +177,7 @@ namespace TASKTRACKERSYSTEM.Controllers
                 }
                 
              
-            }
+           }
            
             return RedirectToAction("Index");
         }
