@@ -247,10 +247,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\EMPOLYEE\Index.cshtml" />
-    <Content Include="Views\EMPOLYEE\Create.cshtml" />
     <Content Include="Scripts\jquery-2.0.0.min.map" />
     <Content Include="Views\EMPOLYEE\Delete.cshtml" />
     <Content Include="Views\EMPOLYEE\Edit.cshtml" />
+    <Content Include="Views\EMPOLYEE\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,27 +1,14 @@
 ﻿@model TASKTRACKERSYSTEM.Models.TASK
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script src="~/Scripts/jquery-2.0.0.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/Content/themes/base/datepicker.css" rel="stylesheet" />
 
-
-<h2>Create</h2>
-
-@{
-    if (ViewBag.Message != null)
-    {
-        <div>
-            @ViewBag.Message= TempData["message"];
-        </div>
-    }
-}
+@*<h2>Task Tracker System </h2>*@
 <style type="text/css">
     .ui-datepicker-trigger {
         /* Apply your CSS styles here */
@@ -42,67 +29,78 @@
     .form-control {
         border: 2px solid;
         padding: 3px;
-        
+    }
 </style>
-
+@{
+    if (ViewBag.Message != null)
+    {
+        <div>
+            @ViewBag.Message= TempData["message"];
+        </div>
+    }
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <p class="form-horizontal">
-    <p>EMPLOYE</p>
+    <p>Create Task</p>
     <hr />
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    <p class="form-group">
-        @Html.LabelFor(model => model.TASKNAME, "Task Name", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @Html.EditorFor(model => model.TASKNAME)
-    </p>
-    <p class="col-md-10">
 
-        @*@Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })*@
 
+
+<p class="form-group">
+    @Html.LabelFor(model => model.TASKNAME, "TaskName", htmlAttributes: new { @class = "control-label col-md-2 required" })
+    @Html.EditorFor(model => model.TASKNAME)
+
+<p class="col-md-10">
+          @*new { htmlAttributes = new { @class = "form-control" } })*@
+         @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
+
+     </p>
     </p>
 
-    <p class="form-group">
-        @Html.LabelFor(model => model.ASSIGNEDTO, "Assigned To", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @*@Html.Label("AssignedTo", htmlAttributes: new { @class = "control-label col-md-2 required" })*@
-        @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
-    </p>
-    <p class="col-md-10">
+     <p class="form-group">
+         @Html.LabelFor(model => model.ASSIGNEDTO, "AssignedTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
+         @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+
+     <p class="col-md-10">
+
+   
         @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
-    </p>
 
-    <p class="form-group">
-        @Html.LabelFor(model => model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off", @display = "date" })
-        <span class="input-group-addon">
-            <i class="fa fa-calendar"></i>
-        </span>
     </p>
-    <p class="col-md-10">
+    </p>
+     <p class="form-group">
+         @Html.LabelFor(model => model.DUETO, "DueTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
+         @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off" })
+     <p class="col-md-10">
 
+      
+        @*@Html.TextBox("DUETO", Model.DUETO.Value.Date.ToString("dd-MM-yyyy"), new { @class = "datepicker", @autocomplete = "off", })*@
         @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
-
+    </p>
     </p>
 
     <p class="form-group">
-
         @Html.LabelFor(model => model.STATUS, "Status", htmlAttributes: new { @class = "control-label col-md-2 required" })
         @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")
+    <p class="col-md-10">
 
+
+        @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
+    </p>
     </p>
 
     <p class="form-group">
     <p class="col-md-offset-2 col-md-10">
         <button>SUBMIT</button>
-        @*<input type="submit" value="Submit" class="btn btn-default" />*@
-
+        @*<input type="submit" value="Create" class="btn btn-default" />*@
     </p>
     </p>
     </p>
- }
-
-
+}
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
@@ -125,6 +123,8 @@
         });
     });
 </script>
+
+
 
 
 

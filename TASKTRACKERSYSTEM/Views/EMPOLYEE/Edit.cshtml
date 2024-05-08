@@ -8,7 +8,7 @@
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/Content/themes/base/datepicker.css" rel="stylesheet" />
 
-<h2>Edit</h2>
+@*<h2>Edit</h2>*@
 <style type="text/css">
     .ui-datepicker-trigger {
         /* Apply your CSS styles here */
@@ -32,48 +32,57 @@
         box-sizing: border-box;
     }
 </style>
+@{
+    if (ViewBag.Message != null)
+    {
+        <div>
+            @ViewBag.Message= TempData["message"];
+        </div>
+    }
+}
+
 @using (Html.BeginForm())
-{
+ {
     @Html.AntiForgeryToken()
 
     <p class="form-horizontal"></p>
-    <p>EMPLOYE</p>
+    <p>Edit Task </p>
     <hr />
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <p class="form-group">
-        @Html.LabelFor(model => model.TASKNAME, "Task Name ", htmlAttributes: new { @class = "control-label col-md-2 required" })
-
+        @Html.LabelFor(model => model.TASKNAME, "TaskName ", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.EditorFor(model => model.TASKNAME)
     </p>
     <p class="col-md-10">
-        @Html.EditorFor(model => model.TASKNAME)
+
         @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
     </p>
     <p class="form-group">
-        @Html.LabelFor(model => model.ASSIGNEDTO, "Assigned To", htmlAttributes: new { @class = "control-label col-md-2" })
-
+        @Html.LabelFor(model => model.ASSIGNEDTO, "AssignedTo", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
     </p>
     <p class="col-md-10">
-        @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+
 
         @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
     </p>
 
     <p class="form-group">
-        @Html.LabelFor(Model => Model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @*(Model.HasValue ? Model.Value.ToShortDateString() : string.Empty)*@
-        @*@Html.EditorFor(model => model.DUETO.Value.ToString("d"), new { @value = "ViewBag.DueTo", @class = "datepicker", @autocomplete = "off", @display = "date" })*@
+        @Html.LabelFor(model => model.DUETO, "DueTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.TextBox("DUETO", Model.DUETO.HasValue ? Model.DUETO.Value.Date.ToString("dd-MM-yy") : "", new { @class = "datepicker", @autocomplete = "off", })
 
     </p>
     <p class="col-md-10">
-        @*<input type="text" class="datepicker" value="@ViewBag.DueTo"  readonly />*@
-        @Html.TextBox("DUETO", Model.DUETO.Value, "{0:dd-MM-yyyy}", new { @style = "width:100%", @class = "datepicker", @autocomplete = "off", })
+
         @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
+
     </p>
 
     <p class="form-group">
 
-        @Html.LabelFor(model => model.STATUS, "Status", new { @class = "control-label" })
-        @Html.DropDownListFor(model => model.STATUS, ViewBag.StatusList as SelectList, "Select Status", new { @class = "form-control" })
+        @Html.LabelFor(model => model.STATUS, "Status", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        @Html.DropDownListFor(model => model.STATUS, ViewBag.StatusList as SelectList)  @*, "Select Status", new { @class = "form-control" })*@
+
     </p>
     <p class="col-md-10">
 
@@ -89,22 +98,16 @@
             Save
         </button>
 
+        @Html.ActionLink("Back to List", "Index")
+
     </p>
  }
 
-@{
-    if (ViewBag.Message != null)
-    {
-    <div>
-        @ViewBag.Message= TempData["message"];
-    </div>
-    }
-}
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
 <script>
     $(document).ready(function () {
+
+
         $(".datepicker").datepicker({
             dateFormat: "dd-MM-yy",
             minDate: 0,

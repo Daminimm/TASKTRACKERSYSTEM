@@ -77,10 +77,13 @@ namespace TASKTRACKERSYSTEM.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(TASK MODEL, TaskStatus?status)
         {
             TASKTRACKEREntities DBContext = new TASKTRACKEREntities();
             List<USER> UserList = DBContext.USERS.ToList();
+            //var duetodate = MODEL.DUETO.Value.Date;
+
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
             var statuslist = new List<SelectListItem>
             {
@@ -95,54 +98,43 @@ namespace TASKTRACKERSYSTEM.Controllers
                 
                 DBContext.TASKs.Add(MODEL);
                 DBContext.SaveChanges();
-                TempData["message"] = "Record Create Successfully";    
+                TempData["message"] = "Task Create Successfully";
+                return RedirectToAction("Index");
             }
             
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpGet]
-        public ActionResult Edit(int  id)
+        public ActionResult Edit(int id)
         {
             TASKTRACKEREntities DBContext = new TASKTRACKEREntities();
-            var data = DBContext.TASKs.Where(x => x.TASKID == id).FirstOrDefault();
-           
-            if (data == null)
-            {
-                return HttpNotFound();
-            }
+            TASK data = new TASK(); 
+            data = DBContext.TASKs.Where(x => x.TASKID == id).FirstOrDefault();
+            //if (data == null)
+            //{
+            //    return HttpNotFound();
+            //}
             
+            //DateTime x1 = data.DUETO.Value.Date;
+            //data.DUETO = x1.Date;
 
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
-            //ViewBag.DueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("dd-MM-yyyy") : null;
-           
-
             List<SelectListItem> statusList = new List<SelectListItem>
             {
                  new SelectListItem { Text = "Not Started", Value = ((int)TaskStatus.NotStarted).ToString() },
                  new SelectListItem { Text = "In Progress", Value = ((int)TaskStatus.InProgress).ToString() },
                  new SelectListItem { Text = "Completed", Value = ((int)TaskStatus.Completed).ToString() }
             };
-
-             ViewBag.StatusList = new SelectList(statusList, "Value", "Text", data.STATUS.ToString());
-            //var shortDueTo = data.DUETO.HasValue ? data.DUETO.Value.ToString("d") : null;
-   
-
-
-                return View(data);
+            ViewBag.StatusList = new SelectList(statusList, "Value", "Text", data.STATUS.ToString());
+            return View(data);
         }
         [HttpPost]
         public ActionResult Edit(TASK MODEL, int id)
         {
             TASKTRACKEREntities DBContext = new TASKTRACKEREntities();
             var data = DBContext.TASKs.Where(x => x.TASKID == id).FirstOrDefault();
-            if (data == null)
-            {
-                return HttpNotFound();
-            }
-            
-
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
             List<SelectListItem> statusList = new List<SelectListItem>
@@ -152,27 +144,25 @@ namespace TASKTRACKERSYSTEM.Controllers
                new SelectListItem { Text = "Completed", Value = TaskStatus.Completed.ToString() }
             };
             ViewBag.StatusList = new SelectList(statusList, "Value", "Text", data.STATUS.ToString());
-            if (ModelState.IsValid)
-           {
-                if (data != null)
-                {
-                    data.TASKNAME = MODEL.TASKNAME;
-                    data.ASSIGNEDTO = MODEL.ASSIGNEDTO;
-                    if (MODEL.DUETO.HasValue)
-                    {
-                        data.DUETO = MODEL.DUETO.Value.Date;
-                    }
-                    //data.DUETO = MODEL.DUETO;
-                    data.STATUS = MODEL.STATUS;
-                    DBContext.SaveChanges();
-                    //ViewBag.Message = "Record Update Successfully";
-                    TempData["message"] = "Record Updated Successfully";
-                  
-                }
-                
+            if (data != null)
+            {
+                data.TASKNAME = MODEL.TASKNAME;
+                data.ASSIGNEDTO = MODEL.ASSIGNEDTO;
+                data.DUETO = MODEL.DUETO;
+                data.STATUS = MODEL.STATUS;
+
             }
-           
-            return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+
+                TempData["message"] = "Task Updated Successfully";
+                DBContext.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+
+            return View(data);
         }
         [HttpGet]
         public ActionResult Delete(int? id)
@@ -181,12 +171,12 @@ namespace TASKTRACKERSYSTEM.Controllers
             var data = DBContext.TASKs.Where(x => x.TASKID == id).FirstOrDefault();
             DBContext.TASKs.Remove(data);
             DBContext.SaveChanges();
-            TempData["message"] = "Record Deleted Successfully";
+            TempData["message"] = "Task Deleted Successfully";
             return RedirectToAction("Index");
         }
 
 
-        
+
     }
 
 
