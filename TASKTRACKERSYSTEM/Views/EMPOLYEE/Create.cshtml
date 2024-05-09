@@ -74,8 +74,10 @@
     </p>
      <p class="form-group">
          @Html.LabelFor(model => model.DUETO, "DueTo", htmlAttributes: new { @class = "control-label col-md-2 required" })
-         @Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off" })
-     <p class="col-md-10">
+         @*@Html.TextBox("DUETO", new { @class = "datepicker", @autocomplete = "off", })*@
+         @Html.TextBox("DUETO", "", new { @class = "datepicker", @autocomplete = "off" })
+         @*@Html.EditorFor(model => model.DUETO, new { @class = "datepicker", @autocomplete = "off" })*@
+<p class="col-md-10">
 
       
         @*@Html.TextBox("DUETO", Model.DUETO.Value.Date.ToString("dd-MM-yyyy"), new { @class = "datepicker", @autocomplete = "off", })*@
@@ -107,7 +109,7 @@
 <script>
     $(document).ready(function () {
         $("#DUETO").datepicker({
-            dateFormat: "dd-MM-yy",
+            dateFormat: "dd-mm-yy",
             minDate: 0,
             changeMonth: true,
             changeYear: true,

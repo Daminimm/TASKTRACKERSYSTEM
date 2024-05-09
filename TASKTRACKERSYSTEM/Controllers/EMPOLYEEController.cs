@@ -111,14 +111,6 @@ namespace TASKTRACKERSYSTEM.Controllers
             TASKTRACKEREntities DBContext = new TASKTRACKEREntities();
             TASK data = new TASK(); 
             data = DBContext.TASKs.Where(x => x.TASKID == id).FirstOrDefault();
-            //if (data == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            
-            //DateTime x1 = data.DUETO.Value.Date;
-            //data.DUETO = x1.Date;
-
             List<USER> UserList = DBContext.USERS.ToList();
             ViewBag.UserList = UserList.Select(x => new SelectListItem { Value = x.UserID.ToString(), Text = x.Username.ToString() }).ToList();
             List<SelectListItem> statusList = new List<SelectListItem>

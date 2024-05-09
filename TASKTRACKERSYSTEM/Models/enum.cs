@@ -34,7 +34,7 @@ namespace TASKTRACKERSYSTEM.Models
     {
         public int STATUS { get; set; }
 
-        public TaskStatus Status // Property to get or set status as enum
+        public TaskStatus Status 
         {
             get => (TaskStatus)STATUS;
             set => STATUS = (int)value;
