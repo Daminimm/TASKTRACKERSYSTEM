@@ -52,7 +52,6 @@
 <p class="form-group">
     @Html.LabelFor(model => model.TASKNAME, "Task Name", htmlAttributes: new { @class = "control-label col-md-2 required" })
     @Html.EditorFor(model => model.TASKNAME)<br />
- 
     @Html.ValidationMessageFor(model => model.TASKNAME, "", new { @class = "text-danger" })
   
 
@@ -64,30 +63,32 @@
 </p>
     </p>
 
-     <p class="form-group">
-         @Html.LabelFor(model => model.ASSIGNEDTO, "Assigned To", htmlAttributes: new { @class = "control-label col-md-2 required" })
-         @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")
+<p class="form-group">
+    @Html.LabelFor(model => model.ASSIGNEDTO, "Assigned To", htmlAttributes: new { @class = "control-label col-md-2 required" })
+    @Html.DropDownList("ASSIGNEDTO", (List<SelectListItem>)ViewBag.UserList, "Select User")<br />
+    @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
 
-     <p class="col-md-10">
+<p class="col-md-10">
 
    
         @*@Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })*@
 
     </p>
     </p>
-     <p class="form-group">
-         @Html.LabelFor(model => model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
-         @Html.TextBox("DUETO", "", new { @class = "datepicker", @autocomplete = "off" })
-        
-     <p class="col-md-10">
+<p class="form-group">
+    @Html.LabelFor(model => model.DUETO, "Due To", htmlAttributes: new { @class = "control-label col-md-2 required" })
+    @Html.TextBox("DUETO", "", new { @class = "datepicker", @autocomplete = "off" }) <br/>
+    @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
+<p class="col-md-10">
         @*@Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })*@
     </p>
     </p>
 
-    <p class="form-group">
-        @Html.LabelFor(model => model.STATUS, "Status", htmlAttributes: new { @class = "control-label col-md-2 required" })
-        @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")
-    <p class="col-md-10">
+<p class="form-group">
+    @Html.LabelFor(model => model.STATUS, "Status", htmlAttributes: new { @class = "control-label col-md-2 required" })
+    @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, "Select Status")<br/>
+    @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
+<p class="col-md-10">
 
 
         @*@Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })*@

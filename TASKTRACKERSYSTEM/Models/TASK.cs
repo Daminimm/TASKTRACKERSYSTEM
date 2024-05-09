@@ -24,16 +24,16 @@ namespace TASKTRACKERSYSTEM.Models
 
         public int TASKID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Task Name should  be  requried")]
         [AlphanumericAttribute(ErrorMessage = "Task Name should allow only alphanumeric characters and be maximum 50 characters.")]
         public string TASKNAME { get; set; }
 
         [Required(ErrorMessage = "Assigned To should be selected from a list of available team members.")]
         public Nullable<int> ASSIGNEDTO { get; set; }
 
-        [Required(ErrorMessage = "Assigned To should be selected from a list of available team members.")]
+        [Required(ErrorMessage = "Due Date should be in the future")]
         public Nullable<System.DateTime> DUETO { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Status should be required")]
         public int STATUS { get; set; }
   
         public virtual USER USER { get; set; }
