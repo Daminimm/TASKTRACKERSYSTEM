@@ -16,7 +16,7 @@ namespace TASKTRACKERSYSTEM.CustomValidation
                 string stringValue = value.ToString();
 
                 
-                if (!Regex.IsMatch(stringValue, "^[a-zA-Z0-9]*$") || stringValue.Length > 50)
+                if (!Regex.IsMatch(stringValue, "^[a-zA-Z0-9 ]{1,50}$") || stringValue.Length > 50)
                 {
                     return new ValidationResult("Task Name should allow only alphanumeric characters and be maximum 50 characters.");
                 }

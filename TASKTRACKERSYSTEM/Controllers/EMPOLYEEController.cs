@@ -77,7 +77,7 @@ namespace TASKTRACKERSYSTEM.Controllers
 
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+
         public ActionResult Create(TASK MODEL, TaskStatus?status)
         {
             TASKTRACKEREntities DBContext = new TASKTRACKEREntities();

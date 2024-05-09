@@ -48,7 +48,7 @@
     <p class="form-horizontal"></p>
     <p>Edit Task </p>
     <hr />
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
     <p class="form-group">
         @Html.LabelFor(model => model.TASKNAME, "TaskName ", htmlAttributes: new { @class = "control-label col-md-2 required" })
         @Html.EditorFor(model => model.TASKNAME)
@@ -64,7 +64,7 @@
     <p class="col-md-10">
 
 
-        @Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })
+        @*@Html.ValidationMessageFor(model => model.ASSIGNEDTO, "", new { @class = "text-danger" })*@
     </p>
 
     <p class="form-group">
@@ -74,7 +74,7 @@
     </p>
     <p class="col-md-10">
 
-        @Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })
+        @*@Html.ValidationMessageFor(model => model.DUETO, "", new { @class = "text-danger" })*@
 
     </p>
 
@@ -86,7 +86,7 @@
     </p>
     <p class="col-md-10">
 
-        @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })
+        @*@Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "text-danger" })*@
     </p>
 
     <p class="form-group"></p>

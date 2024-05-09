@@ -118,7 +118,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Confirm Delete</h4>
-                <span onclick="onclick=" closeModal('deleteModal').style.display='none' class="close" title="Close Modal">&times;</span>
+
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete this task?</p>
@@ -136,7 +136,7 @@
 <script>
 
     $(document).ready(function () {
-        var deleteUrl; // Corrected variable name
+        var deleteUrl; // variable name
 
         $(".delete-link").on("click", function (e) {
             e.preventDefault();

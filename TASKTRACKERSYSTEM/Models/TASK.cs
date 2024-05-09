@@ -27,11 +27,11 @@ namespace TASKTRACKERSYSTEM.Models
         [Required]
         [AlphanumericAttribute(ErrorMessage = "Task Name should allow only alphanumeric characters and be maximum 50 characters.")]
         public string TASKNAME { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Assigned To should be selected from a list of available team members.")]
         public Nullable<int> ASSIGNEDTO { get; set; }
-        //[DataType(DataType.Date)]
-       // [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [Required]
+
+        [Required(ErrorMessage = "Assigned To should be selected from a list of available team members.")]
         public Nullable<System.DateTime> DUETO { get; set; }
         [Required]
         public int STATUS { get; set; }
