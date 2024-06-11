@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TASKTRACKERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TASKTRACKEREntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TASKs" EntityType="TASKTRACKERModel.TASK" />
+    <EntitySet Name="USERS" EntityType="TASKTRACKERModel.USER" />
+    <AssociationSet Name="FK__TASK__ASSIGNEDTO__4BAC3F29" Association="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="TASK" EntitySet="TASKs" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="TASK">
     <Key>
       <PropertyRef Name="TASKID" />
@@ -7,23 +15,23 @@
     <Property Name="TASKID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TASKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ASSIGNEDTO" Type="Int32" />
-    <Property Name="DUETO" Type="DateTime" Precision="0" />
+    <Property Name="DUETO" Type="DateTime" Precision="3" />
     <Property Name="STATUS" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="USER" Relationship="Self.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="TASK" ToRole="USERS" />
+    <NavigationProperty Name="USER" Relationship="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="TASK" ToRole="USER" />
   </EntityType>
   <EntityType Name="USER">
     <Key>
       <PropertyRef Name="UserID" />
     </Key>
     <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="TASKs" Relationship="Self.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="USERS" ToRole="TASK" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TASKs" Relationship="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="USER" ToRole="TASK" />
   </EntityType>
   <Association Name="FK__TASK__ASSIGNEDTO__4BAC3F29">
-    <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
-    <End Role="TASK" Type="Self.TASK" Multiplicity="*" />
+    <End Type="TASKTRACKERModel.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="TASKTRACKERModel.TASK" Role="TASK" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="USERS">
+      <Principal Role="USER">
         <PropertyRef Name="UserID" />
       </Principal>
       <Dependent Role="TASK">
@@ -31,12 +39,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="TASKTRACKEREntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="TASKs" EntityType="Self.TASK" />
-    <EntitySet Name="USERS" EntityType="Self.USER" />
-    <AssociationSet Name="FK__TASK__ASSIGNEDTO__4BAC3F29" Association="Self.FK__TASK__ASSIGNEDTO__4BAC3F29">
-      <End Role="USERS" EntitySet="USERS" />
-      <End Role="TASK" EntitySet="TASKs" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

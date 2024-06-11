@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fb6e581036394dde92cc337e2b9f3ce9" Name="Diagram1">
-        <EntityTypeShape EntityType="TASKTRACKERModel.TASK" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TASKTRACKERModel.USER" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <AssociationConnector Association="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TASKTRACKERModel.TASK" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="TASKTRACKERModel.USER" Width="1.5" PointX="0.75" PointY="1.25" />
+        <AssociationConnector Association="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -6,39 +6,20 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System;
-using System.ComponentModel.DataAnnotations;
-using TASKTRACKERSYSTEM.CustomValidation;
-
-
 
 namespace TASKTRACKERSYSTEM.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-    using TASKTRACKERSYSTEM.CustomValidation;
-
+    using System.Collections.Generic;
+    
     public partial class TASK
     {
-     
-
         public int TASKID { get; set; }
-
-        [Required(ErrorMessage = "Task Name should  be  requried")]
-        [AlphanumericAttribute(ErrorMessage = "Task Name should allow only alphanumeric characters and be maximum 50 characters.")]
         public string TASKNAME { get; set; }
-
-        [Required(ErrorMessage = "Assigned To should be selected from a list of available team members.")]
         public Nullable<int> ASSIGNEDTO { get; set; }
-
-        [Required(ErrorMessage = "Due Date should be in the future")]
         public Nullable<System.DateTime> DUETO { get; set; }
-        [Required(ErrorMessage = "Status should be required")]
         public int STATUS { get; set; }
-  
-        public virtual USER USER { get; set; }
-        public int UserID { get; internal set; }
-    }
     
-
+        public virtual USER USER { get; set; }
+    }
 }

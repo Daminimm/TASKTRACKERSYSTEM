@@ -4,15 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TASKTRACKERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="TASK">
+    <Schema Namespace="TASKTRACKERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TASKs">
           <Key>
             <PropertyRef Name="TASKID" />
           </Key>
           <Property Name="TASKID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TASKNAME" Type="varchar" MaxLength="50" />
           <Property Name="ASSIGNEDTO" Type="int" />
-          <Property Name="DUETO" Type="date" />
+          <Property Name="DUETO" Type="datetime" />
           <Property Name="STATUS" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="USERS">
@@ -24,29 +24,36 @@
         </EntityType>
         <Association Name="FK__TASK__ASSIGNEDTO__4BAC3F29">
           <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
-          <End Role="TASK" Type="Self.TASK" Multiplicity="*" />
+          <End Role="TASKs" Type="Self.TASKs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USERS">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="TASK">
+            <Dependent Role="TASKs">
               <PropertyRef Name="ASSIGNEDTO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TASKTRACKERModelStoreContainer">
-          <EntitySet Name="TASK" EntityType="Self.TASK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TASKs" EntityType="Self.TASKs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__TASK__ASSIGNEDTO__4BAC3F29" Association="Self.FK__TASK__ASSIGNEDTO__4BAC3F29">
             <End Role="USERS" EntitySet="USERS" />
-            <End Role="TASK" EntitySet="TASK" />
+            <End Role="TASKs" EntitySet="TASKs" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TASKTRACKERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TASKTRACKEREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TASKs" EntityType="TASKTRACKERModel.TASK" />
+          <EntitySet Name="USERS" EntityType="TASKTRACKERModel.USER" />
+          <AssociationSet Name="FK__TASK__ASSIGNEDTO__4BAC3F29" Association="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29">
+            <End Role="USER" EntitySet="USERS" />
+            <End Role="TASK" EntitySet="TASKs" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="TASK">
           <Key>
             <PropertyRef Name="TASKID" />
@@ -54,23 +61,23 @@
           <Property Name="TASKID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TASKNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ASSIGNEDTO" Type="Int32" />
-          <Property Name="DUETO" Type="DateTime" Precision="0" />
+          <Property Name="DUETO" Type="DateTime" Precision="3" />
           <Property Name="STATUS" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="USER" Relationship="Self.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="TASK" ToRole="USERS" />
+          <NavigationProperty Name="USER" Relationship="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="TASK" ToRole="USER" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="TASKs" Relationship="Self.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="USERS" ToRole="TASK" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TASKs" Relationship="TASKTRACKERModel.FK__TASK__ASSIGNEDTO__4BAC3F29" FromRole="USER" ToRole="TASK" />
         </EntityType>
         <Association Name="FK__TASK__ASSIGNEDTO__4BAC3F29">
-          <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
-          <End Role="TASK" Type="Self.TASK" Multiplicity="*" />
+          <End Type="TASKTRACKERModel.USER" Role="USER" Multiplicity="0..1" />
+          <End Type="TASKTRACKERModel.TASK" Role="TASK" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
+            <Principal Role="USER">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="TASK">
@@ -78,14 +85,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TASKTRACKEREntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="TASKs" EntityType="Self.TASK" />
-          <EntitySet Name="USERS" EntityType="Self.USER" />
-          <AssociationSet Name="FK__TASK__ASSIGNEDTO__4BAC3F29" Association="Self.FK__TASK__ASSIGNEDTO__4BAC3F29">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="TASK" EntitySet="TASKs" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -94,20 +93,20 @@
         <EntityContainerMapping StorageEntityContainer="TASKTRACKERModelStoreContainer" CdmEntityContainer="TASKTRACKEREntities">
           <EntitySetMapping Name="TASKs">
             <EntityTypeMapping TypeName="TASKTRACKERModel.TASK">
-              <MappingFragment StoreEntitySet="TASK">
-                <ScalarProperty Name="TASKID" ColumnName="TASKID" />
-                <ScalarProperty Name="TASKNAME" ColumnName="TASKNAME" />
-                <ScalarProperty Name="ASSIGNEDTO" ColumnName="ASSIGNEDTO" />
-                <ScalarProperty Name="DUETO" ColumnName="DUETO" />
+              <MappingFragment StoreEntitySet="TASKs">
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DUETO" ColumnName="DUETO" />
+                <ScalarProperty Name="ASSIGNEDTO" ColumnName="ASSIGNEDTO" />
+                <ScalarProperty Name="TASKNAME" ColumnName="TASKNAME" />
+                <ScalarProperty Name="TASKID" ColumnName="TASKID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USERS">
             <EntityTypeMapping TypeName="TASKTRACKERModel.USER">
               <MappingFragment StoreEntitySet="USERS">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
